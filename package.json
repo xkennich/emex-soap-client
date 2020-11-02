@@ -1,0 +1,19 @@
+{
+  "name": "emex-soap-client",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "start": "node src/index.js"
+  },
+  "keywords": [
+    "soap",
+    "client",
+    "emex"
+  ],
+  "author": "Timofey Sherbakov <xkennich@gmail.com>",
+  "license": "ISC",
+  "dependencies": {
+    "soap": "^0.34.0"
+  }
+}
