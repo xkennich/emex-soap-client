@@ -1,5 +1,7 @@
 # EMEX Client
 
+Node js клиент для работы с Emex.ru
+
 ### Установка
 
 ```sh
