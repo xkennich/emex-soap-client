@@ -1,3 +1,19 @@
+/**
+  * @typedef manager Данные пользователя для API
+  * @type {Object}
+  * @property {number} login Логин
+  * @property {string} password Пароль
+ */
+
+/**
+  * 
+  * @function EmexClient
+  * @param {manager} manager
+  * @returns {Object} Object с функциями
+  * 
+  * @author Timofey Sherbakov <xkennich@gmail.com>
+  */
+
 module.exports = manager => {
 
     if(typeof manager !== 'object') 

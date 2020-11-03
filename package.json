@@ -4,7 +4,6 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "start": "node src/index.js",
     "test": "echo \"No test specified\""
   },
   "keywords": [
@@ -13,7 +12,7 @@
     "emex"
   ],
   "author": "Timofey Sherbakov <xkennich@gmail.com>",
-  "license": "ISC",
+  "license": "MIT",
   "dependencies": {
     "soap": "^0.34.0"
   }
