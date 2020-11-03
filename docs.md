@@ -14,8 +14,6 @@
     -   [Properties][10]
 -   [getBalanceChangesHistory][11]
     -   [Parameters][12]
--   [connect][13]
-    -   [Parameters][14]
 -   [getUsers][15]
     -   [Parameters][16]
     -   [Properties][17]
@@ -142,16 +140,6 @@ Type: [Object][57]
     -   `option.dateTo` **dateTime** Конечная дата периода, за который запрашивается информация.
 
 Returns **[Array][61]&lt;BalanceChangesHistoryEvent>** BalanceChangesHistoryEvent
-
-## connect
-
-Создание соединения с сервером.
-
-### Parameters
-
--   `dictionaries` **[string][59]** название файла без разширения
-
-Returns **[function][56]** 
 
 ## getUsers
 
