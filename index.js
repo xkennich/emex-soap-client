@@ -7,9 +7,8 @@
 
 /**
  * @function EmexClient
- * @param {manager} manager
- * @returns {Object} Object с функциями
- *
+ * @param {Object<manager>} manager Данные Авторизации
+ * @returns {Object}
  */
 
 module.exports = manager => {
