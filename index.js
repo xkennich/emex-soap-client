@@ -25,15 +25,15 @@ module.exports = manager => {
 
     return {
         //dictionaries
-        ...require('./dictionaries')(manager),
+        ...require('./src/dictionaries')(manager),
 
         //inmotion
-        ...require('./inmotion')(manager),
+        ...require('./src/inmotion')(manager),
 
         //balance
-        ...require('./balance')(manager),
+        ...require('./src/balance')(manager),
 
         //supplierOrders
-        ...require('./supplierOrders')(manager)
+        ...require('./src/supplierOrders')(manager)
     }
 }

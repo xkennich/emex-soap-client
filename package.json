@@ -12,6 +12,11 @@
     "emex"
   ],
   "author": "Timofey Sherbakov <xkennich@gmail.com>",
+  "repository": {
+    "type" : "git",
+    "url" : "https://github.com/xkennich/emex-soap-client.git"
+  },
+  "homepage": "https://github.com/xkennich/emex-soap-client#emex-client",
   "license": "MIT",
   "dependencies": {
     "soap": "^0.34.0"
