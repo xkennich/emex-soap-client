@@ -137,8 +137,6 @@ const getBalanceChangesHistory = (
 module.exports = manager => {
   this.manager = manager
   return {
-    getConsumerBalancesOptions,
-    getBalanceChangesHistoryOptions,
     gddBalance: addBalance.bind(this),
     getConsumerBalances: getConsumerBalances.bind(this),
     getBalanceChangesHistory: getBalanceChangesHistory.bind(this)

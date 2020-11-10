@@ -1,16 +1,18 @@
 const connect = require('./connect')('EmExInmotion')
 
-const inmOptions = {
-  beginDate: null,
-  endDate: null,
-  id: null,
-  activeOnly: false,
-  timestamp: null,
-  detailNum: null,
-  reference: null,
-  states: null,
-  globalIds: null
-}
+/**
+ * @typedef inmOptions
+ * @type {Object}
+ * @property {dateTime | null} beginDateначальная дата выборки. При передаче null фильтрация по этому полю не производится.
+ * @property {dateTime | null} endDate конечная дата выборки. При передаче null фильтрация по этому полю не производится.
+ * @property {number | null} id уникальный идентификатор заказа
+ * @property {boolean} activeOnly при передаче значения true вернутся только активные заказы (т.е. заказы НЕ в статусах 5, 22)
+ * @property {string | null} timestamp при передаче непустого значения вернется движение с timestamp больше переданного. Если передать null – параметр не повлияет на выборку.
+ * @property {number | null} detailNum номер детали.
+ * @property {string} reference комментарий, который заносит оптовик.
+ * @property {number} states список допустимых состояний для фильтрации.
+ * @property {[number] | number | null} globalIds список заказов для фильтрации
+ */
 
 /**
  * Метод возвращает массив объектов, представляющий оптовику выборку
@@ -19,27 +21,29 @@ const inmOptions = {
  *
  * @function inmWholesaler
  * @param {function} callback callback-функция в которую передается ответ
- * @param {Object<inmOptions>} options Параметры запроса
+ * @param {Object.<inmOptions>} options Параметры запроса
  *
  * Этот метод разрешено использовать только оптовикам и запрещено потребителям. В случае
  * потребителя метод возвращает SoapError: "Данный метод может вызываться только оптовиком".
  *
  * @returns {Array.<InmWholesaler>} InmWholesaler
  */
-const inmWholesaler = (callback, options = inmOptions) => {
+const inmWholesaler = (callback, options = {}) => {
   connect((err, client) => {
     if (err) throw new Error(err)
     const query = {
       ...this.manager,
-      beginDate: options.beginDate,
-      endDate: options.endDate,
-      greaterThenGlobalId: options.id,
-      activeOnly: options.activeOnly,
-      timestamp: options.timestamp,
-      detailNum: options.detailNum,
-      reference: options.reference,
-      states: options.states,
-      globalIds: options.globalIds
+      beginDate: options.beginDate ? options.beginDate : null,
+      endDate: options.endDate ? options.endDate : null,
+      greaterThenGlobalId: options.id ? options.id : null,
+      activeOnly: options.activeOnly ? options.activeOnly : false,
+      timestamp: options.timestamp ? options.timestamp : null,
+      detailNum: options.detailNum ? options.detailNum : null,
+      reference: options.reference ? options.reference : null,
+      states: options.states ? options.states : null,
+      globalIds: options.globalIds 
+        ? Array.isArray(options.globalIds) ? {long: [...options.globalIds]} : {long: [options.globalIds]}
+        : null
     }
     client.GetWholesalerInmotion4(query, (err, result) => {
       if (err) throw new Error(err)
@@ -59,20 +63,22 @@ const inmWholesaler = (callback, options = inmOptions) => {
  *
  * @returns {Array.<InmConsumer>} InmConsumer
  */
-const inmConsumer = (callback, options = inmOptions) => {
+const inmConsumer = (callback, options = {}) => {
   connect((err, client) => {
     if (err) throw new Error(err)
     const qyeru = {
       ...this.manager,
-      beginDate: options.beginDate,
-      endDate: options.endDate,
-      greaterThenGlobalId: options.id,
-      activeOnly: options.activeOnly,
-      timestamp: options.timestamp,
-      detailNum: options.detailNum,
-      reference: options.reference,
-      states: options.states,
-      globalIds: options.globalIds
+      beginDate: options.beginDate ? options.beginDate : null,
+      endDate: options.endDate ? options.endDate : null,
+      greaterThenGlobalId: options.id ? options.id : null,
+      activeOnly: options.activeOnly ? options.activeOnly : false,
+      timestamp: options.timestamp ? options.timestamp : null,
+      detailNum: options.detailNum ? options.detailNum : null,
+      reference: options.reference ? options.reference : null,
+      states: options.states ? options.states : null,
+      globalIds: options.globalIds 
+        ? Array.isArray(options.globalIds) ? {long: [...options.globalIds]} : {long: [options.globalIds]}
+        : null
     }
     client.GetConsumerInmotion5(qyeru, (err, result) => {
       if (err) throw new Error(err)
@@ -105,6 +111,14 @@ const inMotionSubIdByGlobalId = (callback, id) => {
 }
 
 /**
+ * @typedef GlobalIdInputItem
+ * @type {Object}
+ * @property {number} GlobalId	Уникальный идентификатор движения
+ * @property {number} Count	Количество деталей
+ * @property {number} State	Новое состояние
+ */
+
+/**
  * Задаёт состояния заказов по уникальным идентификаторам движения и возвращает массив объектов,
  * представляющий данные о текущем состоянии переданных на вход метода заказов.
  *
@@ -114,7 +128,8 @@ const inMotionSubIdByGlobalId = (callback, id) => {
  *
  * @returns {Array<number>}
  */
-const setInmotionStateByGlobalId = (callback, items = []) => {
+const setInmotionStateByGlobalId = (callback, items) => {
+  if(items.length === 0) throw new Error('Items добжен быть не пустым массивом объектов')
   connect((err, client) => {
     if (err) throw new Error(err)
     const options = {
@@ -129,28 +144,6 @@ const setInmotionStateByGlobalId = (callback, items = []) => {
     })
   })
 }
-
-/**
- * @typedef inmOptions
- * @type {Object}
- * @property {dateTime | null} beginDateначальная дата выборки. При передаче null фильтрация по этому полю не производится.
- * @property {dateTime | null} endDate конечная дата выборки. При передаче null фильтрация по этому полю не производится.
- * @property {number | null} id уникальный идентификатор заказа
- * @property {boolean} activeOnly при передаче значения true вернутся только активные заказы (т.е. заказы НЕ в статусах 5, 22)
- * @property {string | null} timestamp при передаче непустого значения вернется движение с timestamp больше переданного. Если передать null – параметр не повлияет на выборку.
- * @property {number | null} detailNum номер детали.
- * @property {string} reference комментарий, который заносит оптовик.
- * @property {number} states список допустимых состояний для фильтрации.
- * @property {[number] | null} globalIds список заказов для фильтрации
- */
-
-/**
- * @typedef GlobalIdInputItem
- * @type {Object}
- * @property {number} GlobalId	Уникальный идентификатор движения
- * @property {number} Count	Количество деталей
- * @property {number} State	Новое состояние
- */
 
 /**
  * @typedef InmWholesaler
@@ -299,7 +292,6 @@ const setInmotionStateByGlobalId = (callback, items = []) => {
 module.exports = manager => {
   this.manager = manager
   return {
-    inmOptions,
     inmWholesaler: inmWholesaler.bind(this),
     inmConsumer: inmConsumer.bind(this),
     inMotionSubIdByGlobalId: inMotionSubIdByGlobalId.bind(this),

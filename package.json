@@ -11,7 +11,7 @@
     "client",
     "emex"
   ],
-  "author": "Timofey Sherbakov <xkennich@gmail.com>",
+  "author": "xkennich <xkennich@gmail.com>",
   "repository": {
     "type": "git",
     "url": "https://github.com/xkennich/emex-soap-client.git"

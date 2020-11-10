@@ -20,27 +20,23 @@ module.exports = EmexClient({login: '123456', password: '123456'})
 
 ### Использование
 
-Вывести всех клиентов
+Получить всех клиентов
 
 ```js
 const EmexClient = require('./emex')
 
-const usersCallback = users => {
-    console.log(users)
-}
+const usersCallback = users => console.log(users) 
 
 EmexClient.getUsers(usersCallback)
 
 ```
 
-Вывести одного клиента
+Получить одного клиента
 
 ```js
 const EmexClient = require('./emex')
 
-const userCallback = user => {
-    console.log(user)
-}
+const userCallback = user => console.log(user) 
 
 EmexClient.getUsers(userCallback, 1111111)
 
